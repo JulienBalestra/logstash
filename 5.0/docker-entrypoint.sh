@@ -2,14 +2,15 @@
 
 set -e
 
-if [ -z $LOGSTASH_COMMAND ]
+if [ -z $LOGSTASH_CONF ]
 then
-	echo '$LOGSTASH_COMMAND is empty'
+	echo '$LOGSTASH_CONF is empty'
 	exit 1
 fi
 
-if [ $HOSTS == "true" ]
+# Workaround the rkt missing entry
+if [ $AC_APP_NAME ]
 then
 	ip addr show eth0 | grep -Eo "[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}") $(hostname)" >> /etc/hosts
 fi
-exec "logstash $LOGSTASH_COMMAND"
+exec "logstash -f $LOGSTASH_CONF"
