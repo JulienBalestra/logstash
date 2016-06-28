@@ -11,6 +11,7 @@ fi
 # Workaround the rkt missing entry
 if [ $AC_APP_NAME ]
 then
-	ip addr show eth0 | grep -Eo "[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}") $(hostname)" >> /etc/hosts
+	IP=$(ip addr show eth0 | grep -Eo "[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}") 
+	echo "$IP $(hostname)" >> /etc/hosts
 fi
 exec "logstash -f $LOGSTASH_CONF"
