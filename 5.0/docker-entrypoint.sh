@@ -14,4 +14,4 @@ then
 	IP=$(ip addr show eth0 | grep -Eo "[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}") 
 	echo "$IP $(hostname)" >> /etc/hosts
 fi
-exec "logstash -f $LOGSTASH_CONF"
+exec logstash -f $LOGSTASH_CONF
