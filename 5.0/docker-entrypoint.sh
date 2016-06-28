@@ -2,14 +2,14 @@
 
 set -e
 
-# Add logstash as command if needed
-if [ "${1:0:1}" = '-' ]; then
-	set -- logstash "$@"
+if [ -z $LOGSTASH_COMMAND ]
+then
+	echo '$LOGSTASH_COMMAND is empty'
+	exit 1
 fi
 
-# Run as user "logstash" if the command is "logstash"
-if [ "$1" = 'logstash' ]; then
-	set -- gosu logstash "$@"
+if [ $HOSTS == "true" ]
+then
+	ip addr show eth0 | grep -Eo "[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}") $(hostname)" >> /etc/hosts
 fi
-
-exec "$@"
+exec "logstash $LOGSTASH_COMMAND"
